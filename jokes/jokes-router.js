@@ -1,6 +1,16 @@
 const axios = require('axios');
 
+const Jokes = require('./jokes-model');
 const router = require('express').Router();
+
+router.get("/users", (req, res) => {
+  Jokes.find()
+    .then(users => {
+      res.json(users);
+    })
+    .catch(err => res.send(err));
+});
+
 
 router.get('/', (req, res) => {
   const requestOptions = {
