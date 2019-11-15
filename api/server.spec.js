@@ -2,7 +2,7 @@ const request = require("supertest");
 
 const server = require("./server.js");
 
-const auth = require('../auth/auth-router.js');
+// const auth = require('../auth/auth-router.js');
 
 
 it("should set db environment to testing", function() {
@@ -38,15 +38,16 @@ it("should set db environment to testing", function() {
 
     describe('POST /register', function() {
         it('should get a list of users', function() {
-            return request(auth)
+            return request(server)
         .post('/api/auth/register')
+        .send({username:'abcdef', password:'1234'})
         .then(res => {
           expect(res.status).toBe(201);
             });
         })
         it("should return JSON formatted response", function() {
-            return request(auth)
-                .post("/register")
+            return request(server)
+                .post("/api/auth/register")
                 .then(res => {
                 expect(res.type).toMatch(/json/i);
                 });
@@ -56,15 +57,16 @@ it("should set db environment to testing", function() {
 
      describe('POST /login', function() {
         it('should get a list of user', function() {
-            return request(auth)
-        .post('/login')
+            return request(server)
+        .post('/api/auth/login')
+        .send({username:'abcdef', password:'1234'})
         .then(res => {
           expect(res.status).toBe(200);
             });
         })
         it("should return JSON formatted response", function() {
-            return request(auth)
-                .post("/login")
+            return request(server)
+                .post("/api/auth/login")
                 .then(res => {
                 expect(res.type).toMatch(/json/i);
                 });
