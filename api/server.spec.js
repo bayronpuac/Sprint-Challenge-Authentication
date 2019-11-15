@@ -37,10 +37,10 @@ it("should set db environment to testing", function() {
 
 
     describe('POST /register', function() {
-        it('should get a list of users', function() {
+        it('should register a new person', function() {
             return request(server)
         .post('/api/auth/register')
-        .send({username:'abcdef', password:'1234'})
+        .send({username:'Bayron5', password:'1234'})
         .then(res => {
           expect(res.status).toBe(201);
             });
@@ -59,7 +59,7 @@ it("should set db environment to testing", function() {
         it('should get a list of user', function() {
             return request(server)
         .post('/api/auth/login')
-        .send({username:'abcdef', password:'1234'})
+        .send({username:'Bayron', password:'1234'})
         .then(res => {
           expect(res.status).toBe(200);
             });
@@ -67,6 +67,25 @@ it("should set db environment to testing", function() {
         it("should return JSON formatted response", function() {
             return request(server)
                 .post("/api/auth/login")
+                .then(res => {
+                expect(res.type).toMatch(/json/i);
+                });
+            });
+     })
+
+
+   
+     describe('GET /', function() {
+        it('should not get a lost of jokes because of no token', function() {
+            return request(server)
+        .get('/api/jokes')
+        .then(res => {
+          expect(res.status).toBe(400);
+            });
+        })
+        it("should return JSON formatted response", function() {
+            return request(server)
+                .get("/api/jokes")
                 .then(res => {
                 expect(res.type).toMatch(/json/i);
                 });
